@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Govement Senate TGIF</title>
+    <!--import Boostraps css, js, font awesome here CDN: Content Delivery Network-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+    <link rel="stylesheet" href ="./styles.css">
+</head>
+    
+<body class="container">
+    <div class="container-fluid">
+        <img src="tgif_logo.png" class="img-circle col-xs-1" alt="TGIF LOGO"><!-- logo image with auto-adjusted height to windows size-->
+        <h1 class="text-center col-xs-9">Transparent Government in Fact</h1>
+        <p class="text-right col-xs-2" style="margin: 35px 0px 5px 0px">
+            <a href="mailto:info@tgif.net" ><span class="glyphicon glyphicon-envelope"></span>info@tgif.net</a></p>
+    </div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarResponsive">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li>
+                        <a class="nav-link" href="home-starter-page.html">Home</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Congress 113<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-link">
+                                <a class="nav-link" href="house-starter-page.html">House</a>
+                            </li>
+                            <li class="nav-link">
+                                <a class="nav-link" href="senate-data.html">Senate</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Attendance<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-link">
+                                <a class="nav-link" href="house-attendances-statistics.html">House</a>
+                            </li>
+                            <li class="nav-link">
+                                <a class="nav-link" href="senate_attendance-statistics.html">Senate</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Party Loyalty<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="active">
+                                <a class="nav-link" href="house-party-loyalty-statistics.html">House</a>
+                            </li>
+                            <li class="nav-link">
+                                <a class="nav-link" href="senate-partyloyaty-statistics.html">Senate</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>  
+    
+<!--Table container-->
+    <div class="container" id="app">
+        <div class="container">
+        <div class="col-xs-6">
+            <h2>Party Loyalty</h2>
+            <p>Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+        </div>
+    	 <div class="col-xs-6">   
+            <h2>Senate at a glance</h2>
+            <table  class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Party</th>
+                        <th>No of Reps</th>
+                        <th>% Voted w/ Prty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="static in statistics">
+                        <td>{{static.party}}</td>
+                        <td>{{static.noSen}}</td>
+                        <td>{{static.percentVoteParty}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div> 
+    <hr>
+        <div class="container">
+        <div class="col-xs-6">        
+            <h2>Least Loyal (Bottom 10% of Party)</h2>
+            <table  class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Number Party Votes</th>
+                        <th>% Party Votes</th>
+                    </tr>
+                </thead>
+                <tbody id="table2HouseParty">
+                    <tr v-for="min in missVotePerMin">
+                        <td><a href="#">{{getNameMin(min)}}</a></td>
+                        <td>{{Math.round(min.votes_with_party_pct/100 * min.total_votes)}}</td>
+                        <td>{{min.votes_with_party_pct}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6">
+            <h2>Most Loyal (Top 10% of Party)</h2>
+            <table  class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Number Party Votes</th>
+                        <th>% Party Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="max in missVotePerMax">
+                        <td><a href="#">{{getNameMax(max)}}</a></td>
+                        <td>{{Math.round(max.votes_with_party_pct/100 * max.total_votes)}}</td>
+                        <td>{{max.votes_with_party_pct}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>  
+    </div>
+    <script src="script_house_party.js"></script>
+<div id="footer">&copy;2019 <b>TGIF </b>b>All Rights Reserved.</div>
+</body>
+</html>
